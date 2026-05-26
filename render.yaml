@@ -10,9 +10,8 @@ services:
     envVars:
       - key: PORT
         value: 10000
-      # You can add your database URI and secrets here or in the Render Dashboard:
-      # - key: MONGODB_URI
-      #   sync: false
+      - key: MONGODB_URI
+        value: mongodb+srv://oladipomosun05_db_user:lACTcaY0b0ExLl10@cluster0.aulccqs.mongodb.net/privacy_framework?retryWrites=true&w=majority
 
   # 2. Frontend Static Site
   - type: web
