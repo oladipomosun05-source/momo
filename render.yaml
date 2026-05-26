@@ -1,0 +1,28 @@
+services:
+  # 1. Backend Web Service
+  - type: web
+    name: my-app-backend
+    env: node
+    plan: free
+    rootDir: server
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: PORT
+        value: 10000
+      # You can add your database URI and secrets here or in the Render Dashboard:
+      # - key: MONGODB_URI
+      #   sync: false
+
+  # 2. Frontend Static Site
+  - type: web
+    name: my-app-frontend
+    env: static
+    plan: free
+    rootDir: finalyearprojectlatest
+    buildCommand: npm install && npm run build
+    publishDir: dist
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
