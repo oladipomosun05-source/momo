@@ -25,7 +25,6 @@ services:
   - type: web
     runtime: static
     name: privacyframework
-    plan: free
     rootDir: finalyearprojectlatest
 
     buildCommand: npm install && npm run build
