@@ -1,5 +1,5 @@
 services:
-  # 1. Backend Web Service
+  # Backend API
   - type: web
     name: privacyframeworkb
     env: node
@@ -7,28 +7,30 @@ services:
     rootDir: server
     buildCommand: npm install
     startCommand: npm start
+
     envVars:
       - key: PORT
         value: 10000
+
       - key: MONGODB_URI
         value: mongodb+srv://oladipomosun05_db_user:lACTcaY0b0ExLl10@cluster0.aulccqs.mongodb.net/privacy_framework?retryWrites=true&w=majority
+
       - key: JWT_SECRET
         generateValue: true
-      - key: CORS_ORIGIN
-        fromService:
-          type: staticSite
-          name: privacyframework
-          property: host
 
-staticSites:
-  # 2. Frontend Static Site
-  - name: privacyframework
+      - key: CORS_ORIGIN
+        value: https://privacyframework.onrender.com
+
+  # Frontend
+  - type: static_site
+    name: privacyframework
     rootDir: finalyearprojectlatest
     buildCommand: npm install && npm run build
     publishDir: dist
+
     envVars:
       - key: VITE_API_URL
-        value: https://momobee.onrender.com
+        value: https://privacyframeworkb.onrender.com
 
     routes:
       - type: rewrite
