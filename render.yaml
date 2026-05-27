@@ -16,15 +16,13 @@ services:
         generateValue: true
       - key: CORS_ORIGIN
         fromService:
-          type: web
+          type: static
           name: my-app-frontend
           property: host
 
   # 2. Frontend Static Site
-  - type: web
+  - type: static
     name: my-app-frontend
-    env: static
-    plan: free
     rootDir: finalyearprojectlatest
     buildCommand: npm install && npm run build
     publishDir: dist
