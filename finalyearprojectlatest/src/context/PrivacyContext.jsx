@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { io } from 'socket.io-client';
-import axios from 'axios';
+import api from '../config/axiosInstance';
 
 import { API_URL, API_BASE_URL } from '../config';
 
@@ -18,6 +18,7 @@ export const PrivacyProvider = ({ children }) => {
         role: 'GUEST',
         email: null,
     });
+    const [authToken, setAuthToken] = useState(() => localStorage.getItem('token') || '');
     const [stats, setStats] = useState({
         privacyScore: 100,
         piiCount: 0,
@@ -41,7 +42,7 @@ export const PrivacyProvider = ({ children }) => {
 
     const fetchLogs = async () => {
         try {
-            const res = await axios.get(`${API_URL}/admin/logs`);
+            const res = await api.get(`${API_URL}/admin/logs`);
             setLogs(res.data);
         } catch (err) {
             console.error("Error fetching logs:", err);
@@ -50,7 +51,7 @@ export const PrivacyProvider = ({ children }) => {
 
     const fetchStats = async () => {
         try {
-            const res = await axios.get(`${API_URL}/admin/stats`);
+            const res = await api.get(`${API_URL}/admin/stats`);
             const { totalRequests, piiDetected, criticalAlerts, avgRisk, growth } = res.data;
             setStats({
                 privacyScore: Math.round(100 - (avgRisk * 10)),
@@ -66,7 +67,7 @@ export const PrivacyProvider = ({ children }) => {
 
     const fetchCharts = async () => {
         try {
-            const res = await axios.get(`${API_URL}/admin/charts`);
+            const res = await api.get(`${API_URL}/admin/charts`);
             setChartData(res.data);
         } catch (err) {
             console.error("Error fetching chart data:", err);
@@ -74,6 +75,9 @@ export const PrivacyProvider = ({ children }) => {
     };
 
     useEffect(() => {
+        // Load token on mount (persisted login)
+        const storedToken = localStorage.getItem('token');
+        if (storedToken) setAuthToken(storedToken);
         // Initial Fetch
         fetchLogs();
         fetchStats();
@@ -82,14 +86,13 @@ export const PrivacyProvider = ({ children }) => {
         // Listen for real-time updates
         socket.on('privacy_update', (update) => {
             setLogs(prev => [update.newLog, ...prev].slice(0, 50));
-            
+
             const formattedLines = update.steps.map(text => ({
                 text,
                 type: getStepType(text)
             }));
             setConsoleLines(prev => [...prev, ...formattedLines].slice(-100));
 
-            
             fetchStats();
             fetchCharts();
         });
@@ -101,7 +104,7 @@ export const PrivacyProvider = ({ children }) => {
 
     const addLog = async (event, data, sensitivity = 'LOW') => {
         try {
-            await axios.post(`${API_URL}/simulate`, { event, data, sensitivity }, {
+            await api.post(`${API_URL}/simulate`, { event, data, sensitivity }, {
                 headers: { 'x-user-role': activeUser.role, 'x-user-name': activeUser.name }
             });
         } catch (err) {
@@ -111,7 +114,10 @@ export const PrivacyProvider = ({ children }) => {
 
     const login = (userData, token) => {
         setActiveUser(userData);
-        if (token) localStorage.setItem('token', token);
+        if (token) {
+          localStorage.setItem('token', token);
+          setAuthToken(token);
+        }
         addLog('USER_LOGIN', `User logged in: ${userData.email}`, 'LOW');
     };
 
@@ -122,7 +128,7 @@ export const PrivacyProvider = ({ children }) => {
     };
 
     return (
-        <PrivacyContext.Provider value={{ logs, consoleLines, activeUser, stats, chartData, addLog, login, logout, searchQuery, setSearchQuery }}>
+        <PrivacyContext.Provider value={{ logs, consoleLines, activeUser, authToken, stats, chartData, addLog, login, logout, searchQuery, setSearchQuery }}>
             {children}
         </PrivacyContext.Provider>
     );
