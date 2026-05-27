@@ -76,7 +76,7 @@ const ProductDetail = () => {
                 <div style={{ backgroundColor: '#fff', borderRadius: '4px', padding: '15px' }}>
                     <h4 style={{ fontSize: '12px', marginBottom: '10px' }}>DELIVERY & RETURNS</h4>
                     <div style={{ fontSize: '12px', borderBottom: '1px solid #eee', paddingBottom: '10px' }}>
-                        <strong>Jumia <span style={{ color: '#38bdf8' }}>Express</span></strong>
+                        <strong>Ecommerce <span style={{ color: '#38bdf8' }}>Express</span></strong>
                         <p>Free delivery on thousands of products.</p>
                     </div>
                     <div style={{ fontSize: '12px', marginTop: '10px' }}>

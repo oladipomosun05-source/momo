@@ -11,6 +11,7 @@ const JumiaHome = () => {
     const navigate = useNavigate();
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [selectedCategory, setSelectedCategory] = useState(null);
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -42,26 +43,61 @@ const JumiaHome = () => {
         addLog('CART_ADDITION', `Added ${product.name} to cart`, 'LOW');
     };
 
-    if (loading) return <div style={{ padding: '40px', textAlign: 'center' }}>Loading Jumia Store...</div>;
+    const categories = [
+        'Supermarket',
+        'Health & Beauty',
+        'Home & Office',
+        'Phones & Tablets',
+        'Computing',
+        'Electronics',
+        'Fashion',
+        'Baby Products',
+        'Gaming',
+        'Sporting Goods',
+        'Automobile'
+    ];
+
+    const filteredProducts = selectedCategory
+        ? products.filter(p => p.category?.toLowerCase() === selectedCategory.toLowerCase())
+        : products;
+
+    if (loading) return <div style={{ padding: '40px', textAlign: 'center' }}>Loading Store...</div>;
 
     return (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
             {/* Banner Section */}
             <section style={{ display: 'grid', gridTemplateColumns: '200px 1fr 200px', gap: '20px', height: '380px' }}>
                 {/* Categories Sidebar */}
-                <div style={{ backgroundColor: 'var(--crm-card)', padding: '10px', borderRadius: '4px', boxShadow: '0 2px 5px rgba(0,0,0,0.1)', color: 'var(--crm-text)' }}>
-                    <ul style={{ fontSize: '13px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                        <li>Supermarket</li>
-                        <li>Health & Beauty</li>
-                        <li>Home & Office</li>
-                        <li>Phones & Tablets</li>
-                        <li>Computing</li>
-                        <li>Electronics</li>
-                        <li>Fashion</li>
-                        <li>Baby Products</li>
-                        <li>Gaming</li>
-                        <li>Sporting Goods</li>
-                        <li>Automobile</li>
+                <div style={{ backgroundColor: 'var(--crm-card)', padding: '15px 10px', borderRadius: '4px', boxShadow: '0 2px 5px rgba(0,0,0,0.1)', color: 'var(--crm-text)', overflowY: 'auto' }}>
+                    <h4 style={{ fontSize: '14px', marginBottom: '10px', fontWeight: 'bold', borderBottom: '1px solid var(--crm-border)', paddingBottom: '5px' }}>Categories</h4>
+                    <ul style={{ fontSize: '13px', display: 'flex', flexDirection: 'column', gap: '8px', listStyle: 'none', padding: 0, margin: 0 }}>
+                        <li 
+                            onClick={() => setSelectedCategory(null)}
+                            style={{ 
+                                padding: '6px 8px', borderRadius: '4px', cursor: 'pointer',
+                                backgroundColor: selectedCategory === null ? '#f68b1e' : 'transparent',
+                                color: selectedCategory === null ? '#fff' : 'var(--crm-text)',
+                                fontWeight: selectedCategory === null ? 'bold' : 'normal',
+                                transition: 'all 0.2s'
+                            }}
+                        >
+                            All Products
+                        </li>
+                        {categories.map(cat => (
+                            <li 
+                                key={cat}
+                                onClick={() => setSelectedCategory(cat)}
+                                style={{ 
+                                    padding: '6px 8px', borderRadius: '4px', cursor: 'pointer',
+                                    backgroundColor: selectedCategory === cat ? '#f68b1e' : 'transparent',
+                                    color: selectedCategory === cat ? '#fff' : 'var(--crm-text)',
+                                    fontWeight: selectedCategory === cat ? 'bold' : 'normal',
+                                    transition: 'all 0.2s'
+                                }}
+                            >
+                                {cat}
+                            </li>
+                        ))}
                     </ul>
                 </div>
 
@@ -97,7 +133,7 @@ const JumiaHome = () => {
                     <div style={{ backgroundColor: 'var(--crm-card)', flex: 1, borderRadius: '4px', padding: '10px', display: 'flex', alignItems: 'center', gap: '10px', boxShadow: '0 2px 5px rgba(0,0,0,0.1)', color: 'var(--crm-text)' }}>
                         <div style={{ backgroundColor: '#f68b1e', width: '40px', height: '40px', borderRadius: '50%' }}></div>
                         <div style={{ fontSize: '12px' }}>
-                            <strong>SELL ON JUMIA</strong>
+                            <strong>SELL WITH US</strong>
                             <p>Fast track your business</p>
                         </div>
                     </div>
@@ -107,48 +143,53 @@ const JumiaHome = () => {
             {/* Flash Sales Section */}
             <section style={{ backgroundColor: 'var(--crm-card)', borderRadius: '4px', padding: '15px', boxShadow: '0 2px 5px rgba(0,0,0,0.1)', color: 'var(--crm-text)' }}>
                 <div className="flex align-center justify-between" style={{ borderBottom: '1px solid var(--crm-border)', paddingBottom: '10px', marginBottom: '15px' }}>
-                    <h3 style={{ color: '#f68b1e' }} className="outfit-font">Flash Sales</h3>
-                    <span style={{ fontSize: '14px', fontWeight: 'bold' }}>Time Left: 12h : 30m : 05s</span>
-                    <a href="#" style={{ color: '#f68b1e', fontSize: '14px', fontWeight: 'bold' }}>SEE ALL {'>'}</a>
+                    <h3 style={{ color: '#f68b1e' }} className="outfit-font">{selectedCategory || 'All Products'}</h3>
+                    {filteredProducts.length > 0 && <span style={{ fontSize: '14px', fontWeight: 'bold' }}>{filteredProducts.length} Items Found</span>}
                 </div>
-                <div className="grid-products">
-                    {products.map(product => (
-                        <div
-                            key={product._id}
-                            className="product-card"
-                            style={{ padding: '10px', transition: 'var(--transition)', cursor: 'pointer', display: 'flex', flexDirection: 'column' }}
-                            onClick={() => handleProductClick(product)}
-                        >
-                            <div style={{ position: 'relative' }}>
-                                <img src={product.image} alt={product.name} style={{ width: '100%', borderRadius: '4px' }} />
-                                <span style={{ position: 'absolute', top: '5px', right: '5px', backgroundColor: '#feefde', color: '#f68b1e', padding: '2px 6px', fontSize: '10px', fontWeight: 'bold', borderRadius: '2px' }}>
-                                    -{product.discount}%
-                                </span>
-                            </div>
-                            <div style={{ marginTop: '10px', flex: 1 }}>
-                                <p style={{ fontSize: '14px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', color: 'var(--crm-text)' }}>{product.name}</p>
-                                <p style={{ fontSize: '16px', fontWeight: 'bold', marginTop: '4px', color: 'var(--crm-text)' }}>₦ {Number(product.price).toLocaleString()}</p>
-                                <p style={{ fontSize: '12px', color: 'var(--crm-text-light)', textDecoration: 'line-through' }}>₦ {Number(product.oldPrice).toLocaleString()}</p>
-                                <div className="flex align-center gap-10" style={{ marginTop: '10px' }}>
-                                    <span style={{ color: '#f68b1e' }}>★</span>
-                                    <span style={{ fontSize: '12px', color: 'var(--crm-text-light)' }}>({product.reviews})</span>
-                                </div>
-                            </div>
-                            <button 
-                                onClick={(e) => handleAddToCart(e, product)}
-                                className="add-to-cart-btn"
-                                style={{ 
-                                    marginTop: '15px', width: '100%', padding: '10px', 
-                                    backgroundColor: '#f68b1e', color: '#fff', border: 'none', 
-                                    borderRadius: '4px', fontWeight: 'bold', cursor: 'pointer',
-                                    transition: 'background 0.2s'
-                                }}
+                {filteredProducts.length === 0 ? (
+                    <div style={{ padding: '40px', textAlign: 'center', color: 'var(--crm-text-light)' }}>
+                        No products available in this category yet.
+                    </div>
+                ) : (
+                    <div className="grid-products">
+                        {filteredProducts.map(product => (
+                            <div
+                                key={product._id}
+                                className="product-card"
+                                style={{ padding: '10px', transition: 'var(--transition)', cursor: 'pointer', display: 'flex', flexDirection: 'column' }}
+                                onClick={() => handleProductClick(product)}
                             >
-                                ADD TO CART
-                            </button>
-                        </div>
-                    ))}
-                </div>
+                                <div style={{ position: 'relative' }}>
+                                    <img src={product.image} alt={product.name} style={{ width: '100%', borderRadius: '4px' }} />
+                                    <span style={{ position: 'absolute', top: '5px', right: '5px', backgroundColor: '#feefde', color: '#f68b1e', padding: '2px 6px', fontSize: '10px', fontWeight: 'bold', borderRadius: '2px' }}>
+                                        -{product.discount}%
+                                    </span>
+                                </div>
+                                <div style={{ marginTop: '10px', flex: 1 }}>
+                                    <p style={{ fontSize: '14px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', color: 'var(--crm-text)' }}>{product.name}</p>
+                                    <p style={{ fontSize: '16px', fontWeight: 'bold', marginTop: '4px', color: 'var(--crm-text)' }}>₦ {Number(product.price).toLocaleString()}</p>
+                                    <p style={{ fontSize: '12px', color: 'var(--crm-text-light)', textDecoration: 'line-through' }}>₦ {Number(product.oldPrice).toLocaleString()}</p>
+                                    <div className="flex align-center gap-10" style={{ marginTop: '10px' }}>
+                                        <span style={{ color: '#f68b1e' }}>★</span>
+                                        <span style={{ fontSize: '12px', color: 'var(--crm-text-light)' }}>({product.reviews})</span>
+                                    </div>
+                                </div>
+                                <button 
+                                    onClick={(e) => handleAddToCart(e, product)}
+                                    className="add-to-cart-btn"
+                                    style={{ 
+                                        marginTop: '15px', width: '100%', padding: '10px', 
+                                        backgroundColor: '#f68b1e', color: '#fff', border: 'none', 
+                                        borderRadius: '4px', fontWeight: 'bold', cursor: 'pointer',
+                                        transition: 'background 0.2s'
+                                    }}
+                                >
+                                    ADD TO CART
+                                </button>
+                            </div>
+                        ))}
+                    </div>
+                )}
             </section>
         </div>
     );

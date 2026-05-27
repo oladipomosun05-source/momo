@@ -31,7 +31,7 @@ const LoginPage = () => {
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '60px 0' }}>
             <div style={{ backgroundColor: 'var(--crm-card)', width: '400px', borderRadius: '8px', padding: '40px', boxShadow: '0 4px 20px rgba(0,0,0,0.05)', textAlign: 'center', color: 'var(--crm-text)' }}>
                 <h2 style={{ marginBottom: '10px', fontSize: '24px' }} className="outfit-font">Login</h2>
-                <p style={{ fontSize: '14px', color: 'var(--crm-text-light)', marginBottom: '30px' }}>Access your Jumia account</p>
+                <p style={{ fontSize: '14px', color: 'var(--crm-text-light)', marginBottom: '30px' }}>Access your account</p>
 
                 {error && <div style={{ backgroundColor: '#fef2f2', color: '#ef4444', padding: '10px', borderRadius: '4px', marginBottom: '20px', fontSize: '14px' }}>{error}</div>}
 

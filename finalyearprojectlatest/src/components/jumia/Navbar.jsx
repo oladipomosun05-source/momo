@@ -22,7 +22,7 @@ const Navbar = ({ onCartClick }) => {
                 <div className="flex align-center gap-20">
                     <Menu size={24} style={{ cursor: 'pointer' }} />
                     <Link to="/" style={{ fontSize: '24px', fontWeight: 'bold', color: '#f68b1e', textTransform: 'uppercase', textDecoration: 'none' }}>
-                        JUMIA <span style={{ color: 'var(--crm-text)' }}>Mock</span>
+                        ECOMMERCE
                     </Link>
                 </div>
 
