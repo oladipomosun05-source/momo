@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { usePrivacy } from '../../context/PrivacyContext';
 import { useCart } from '../../context/CartContext';
-import { API_URL } from '../../config';
 import { useNavigate } from 'react-router-dom';
-import { ResponsiveGrid } from '../../components/ResponsiveGrid';
+import { API_URL } from '../../config';
 
 const JumiaHome = () => {
     const { addLog } = usePrivacy();
@@ -152,44 +151,44 @@ const JumiaHome = () => {
                         No products available in this category yet.
                     </div>
                 ) : (
-                    <ResponsiveGrid className="">
-                      {filteredProducts.map(product => (
-                        <div
-                          key={product._id}
-                          className="product-card"
-                          style={{ padding: '10px', transition: 'var(--transition)', cursor: 'pointer', display: 'flex', flexDirection: 'column' }}
-                          onClick={() => handleProductClick(product)}
-                        >
-                          <div style={{ position: 'relative' }}>
-                            <img src={product.image} alt={product.name} style={{ width: '100%', borderRadius: '4px' }} />
-                            <span style={{ position: 'absolute', top: '5px', right: '5px', backgroundColor: '#feefde', color: '#f68b1e', padding: '2px 6px', fontSize: '10px', fontWeight: 'bold', borderRadius: '2px' }}>
-                              -{product.discount}%
-                            </span>
-                          </div>
-                          <div style={{ marginTop: '10px', flex: 1 }}>
-                            <p style={{ fontSize: '14px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', color: 'var(--color-text)' }}>{product.name}</p>
-                            <p style={{ fontSize: '16px', fontWeight: 'bold', marginTop: '4px', color: 'var(--color-text)' }}>₦ {Number(product.price).toLocaleString()}</p>
-                            <p style={{ fontSize: '12px', color: 'var(--color-text-light)', textDecoration: 'line-through' }}>₦ {Number(product.oldPrice).toLocaleString()}</p>
-                            <div className="flex align-center gap-10" style={{ marginTop: '10px' }}>
-                              <span style={{ color: '#f68b1e' }}>★</span>
-                              <span style={{ fontSize: '12px', color: 'var(--color-text-light)' }}>({product.reviews})</span>
+                    <div className="grid-products">
+                        {filteredProducts.map(product => (
+                            <div
+                                key={product._id}
+                                className="product-card"
+                                style={{ padding: '10px', transition: 'var(--transition)', cursor: 'pointer', display: 'flex', flexDirection: 'column' }}
+                                onClick={() => handleProductClick(product)}
+                            >
+                                <div style={{ position: 'relative' }}>
+                                    <img src={product.image} alt={product.name} style={{ width: '100%', borderRadius: '4px' }} />
+                                    <span style={{ position: 'absolute', top: '5px', right: '5px', backgroundColor: '#feefde', color: '#f68b1e', padding: '2px 6px', fontSize: '10px', fontWeight: 'bold', borderRadius: '2px' }}>
+                                        -{product.discount}%
+                                    </span>
+                                </div>
+                                <div style={{ marginTop: '10px', flex: 1 }}>
+                                    <p style={{ fontSize: '14px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', color: 'var(--crm-text)' }}>{product.name}</p>
+                                    <p style={{ fontSize: '16px', fontWeight: 'bold', marginTop: '4px', color: 'var(--crm-text)' }}>₦ {Number(product.price).toLocaleString()}</p>
+                                    <p style={{ fontSize: '12px', color: 'var(--crm-text-light)', textDecoration: 'line-through' }}>₦ {Number(product.oldPrice).toLocaleString()}</p>
+                                    <div className="flex align-center gap-10" style={{ marginTop: '10px' }}>
+                                        <span style={{ color: '#f68b1e' }}>★</span>
+                                        <span style={{ fontSize: '12px', color: 'var(--crm-text-light)' }}>({product.reviews})</span>
+                                    </div>
+                                </div>
+                                <button 
+                                    onClick={(e) => handleAddToCart(e, product)}
+                                    className="add-to-cart-btn"
+                                    style={{ 
+                                        marginTop: '15px', width: '100%', padding: '10px', 
+                                        backgroundColor: '#f68b1e', color: '#fff', border: 'none', 
+                                        borderRadius: '4px', fontWeight: 'bold', cursor: 'pointer',
+                                        transition: 'background 0.2s'
+                                    }}
+                                >
+                                    ADD TO CART
+                                </button>
                             </div>
-                          </div>
-                          <button
-                            onClick={(e) => handleAddToCart(e, product)}
-                            className="add-to-cart-btn"
-                            style={{
-                              marginTop: '15px', width: '100%', padding: '10px',
-                              backgroundColor: 'var(--color-primary)', color: '#fff', border: 'none',
-                              borderRadius: '4px', fontWeight: 'bold', cursor: 'pointer',
-                              transition: 'background 0.2s'
-                            }}
-                          >
-                            ADD TO CART
-                          </button>
-                        </div>
-                      ))}
-                    </ResponsiveGrid>
+                        ))}
+                    </div>
                 )}
             </section>
         </div>

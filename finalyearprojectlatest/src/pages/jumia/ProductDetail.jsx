@@ -39,33 +39,33 @@ const ProductDetail = () => {
     return (
         <div className="flex gap-20" style={{ padding: '20px 0', flexWrap: 'wrap' }}>
             {/* Product Image */}
-            <div style={{ flex: '1 1 400px', backgroundColor: 'var(--color-surface)', borderRadius: 'var(--radius)', padding: '20px', textAlign: 'center' }}>
-                <img src={product.image} alt={product.name} style={{ maxWidth: '100%', borderRadius: 'var(--radius)' }} />
+            <div style={{ flex: '1 1 400px', backgroundColor: '#fff', borderRadius: '4px', padding: '20px', textAlign: 'center' }}>
+                <img src={product.image} alt={product.name} style={{ maxWidth: '100%', borderRadius: '4px' }} />
             </div>
 
             {/* Product Info */}
             <div style={{ flex: '1.5 1 500px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
-                <div className="glass" style={{ borderRadius: 'var(--radius)', padding: '20px' }}>
+                <div style={{ backgroundColor: '#fff', borderRadius: '4px', padding: '20px' }}>
                     <h1 style={{ fontSize: '20px', fontWeight: '400', marginBottom: '10px' }}>{product.name}</h1>
-                    <div className="flex align-center gap-10" style={{ borderBottom: '1px solid var(--color-border)', paddingBottom: '10px' }}>
-                        <span style={{ color: 'var(--color-primary)' }}>★★★★☆</span>
-                        <span style={{ fontSize: '12px', color: 'var(--color-primary)' }}>({product.reviews} ratings)</span>
+                    <div className="flex align-center gap-10" style={{ borderBottom: '1px solid #eee', paddingBottom: '10px' }}>
+                        <span style={{ color: '#f68b1e' }}>★★★★☆</span>
+                        <span style={{ fontSize: '12px', color: '#f68b1e' }}>({product.reviews} ratings)</span>
                     </div>
                     <div style={{ marginTop: '15px' }}>
                         <p style={{ fontSize: '24px', fontWeight: 'bold' }}>₦ {product.price.toLocaleString()}</p>
-                        <p style={{ fontSize: '14px', color: 'var(--color-text-light)', textDecoration: 'line-through' }}>₦ {product.oldPrice.toLocaleString()}</p>
-                        <span style={{ backgroundColor: 'var(--color-secondary-light)', color: 'var(--color-primary)', fontSize: '12px', padding: '2px 4px', borderRadius: '2px' }}>-{product.discount}%</span>
+                        <p style={{ fontSize: '14px', color: '#757575', textDecoration: 'line-through' }}>₦ {product.oldPrice.toLocaleString()}</p>
+                        <span style={{ backgroundColor: '#feefde', color: '#f68b1e', fontSize: '12px', padding: '2px 4px', borderRadius: '2px' }}>-{product.discount}%</span>
                     </div>
                     <button 
                         onClick={() => addToCart(product)}
-                        style={{ backgroundColor: 'var(--color-primary)', color: '#fff', width: '100%', padding: '15px', borderRadius: 'var(--radius)', marginTop: '20px', fontWeight: 'bold', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px' }}>
+                        style={{ backgroundColor: '#f68b1e', color: '#fff', width: '100%', padding: '15px', borderRadius: '4px', marginTop: '20px', fontWeight: 'bold', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px' }}>
                         <ShoppingCart size={20} /> ADD TO CART
                     </button>
                 </div>
 
-                <div className="glass" style={{ borderRadius: 'var(--radius)', padding: '20px' }}>
+                <div style={{ backgroundColor: '#fff', borderRadius: '4px', padding: '20px' }}>
                     <h4 style={{ marginBottom: '10px' }}>PRODUCT DETAILS</h4>
-                    <p style={{ fontSize: '14px', color: 'var(--color-text)' }}>
+                    <p style={{ fontSize: '14px', color: '#282828' }}>
                         This is a high-quality product perfect for your daily needs. It features premium materials and exceptional durability.
                     </p>
                 </div>
@@ -73,7 +73,7 @@ const ProductDetail = () => {
 
             {/* Delivery Info */}
             <div style={{ flex: '0.8 1 300px', display: 'flex', flexDirection: 'column', gap: '15px' }}>
-                <div className="glass" style={{ borderRadius: 'var(--radius)', padding: '15px' }}>
+                <div style={{ backgroundColor: '#fff', borderRadius: '4px', padding: '15px' }}>
                     <h4 style={{ fontSize: '12px', marginBottom: '10px' }}>DELIVERY & RETURNS</h4>
                     <div style={{ fontSize: '12px', borderBottom: '1px solid #eee', paddingBottom: '10px' }}>
                         <strong>Ecommerce <span style={{ color: '#38bdf8' }}>Express</span></strong>

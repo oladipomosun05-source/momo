@@ -4,11 +4,8 @@ import { Link } from 'react-router-dom';
 import { useCart } from '../../context/CartContext';
 import { usePrivacy } from '../../context/PrivacyContext';
 import { useTheme } from '../../context/ThemeContext';
-import { MobileMenu } from './MobileMenu';
-import { useState } from 'react';
 
 const Navbar = ({ onCartClick }) => {
-  const [mobileOpen, setMobileOpen] = useState(false);
     const { totalItems } = useCart();
     const { activeUser, logout } = usePrivacy();
     const { theme, toggleTheme } = useTheme();
@@ -23,7 +20,7 @@ const Navbar = ({ onCartClick }) => {
             <div className="container flex align-center justify-between" style={{ padding: '10px 15px' }}>
                 {/* Logo & Menu */}
                 <div className="flex align-center gap-20">
-                    <Menu size={24} style={{ cursor: 'pointer' }} onClick={() => setMobileOpen(true)} />
+                    <Menu size={24} style={{ cursor: 'pointer' }} />
                     <Link to="/" style={{ fontSize: '24px', fontWeight: 'bold', color: '#f68b1e', textTransform: 'uppercase', textDecoration: 'none' }}>
                         ECOMMERCE
                     </Link>
@@ -43,7 +40,7 @@ const Navbar = ({ onCartClick }) => {
                 </div>
 
                 {/* Links */}
-                <div className="flex align-center gap-20 hide-on-mobile">
+                <div className="flex align-center gap-20">
                     {activeUser.email ? (
                         <div className="flex align-center gap-10">
                             <span style={{ fontSize: '14px', fontWeight: 'bold' }}>Hi, {activeUser.name.split(' ')[0]}</span>
@@ -95,7 +92,6 @@ const Navbar = ({ onCartClick }) => {
                 </div>
             </div>
         </nav>
-      <MobileMenu isOpen={mobileOpen} onClose={() => setMobileOpen(false)} />
     );
 };
 
