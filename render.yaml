@@ -28,10 +28,8 @@ staticSites:
     publishDir: dist
     envVars:
       - key: VITE_API_URL
-        fromService:
-          type: web
-          name: privacyframeworkb
-          property: host
+        value: https://momobee.onrender.com
+
     routes:
       - type: rewrite
         source: /*
