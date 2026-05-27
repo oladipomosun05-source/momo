@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { useParams, Link } from 'react-router-dom';
 import { ShoppingCart, Heart, ShieldCheck } from 'lucide-react';
 import { useCart } from '../../context/CartContext';

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { usePrivacy } from '../../context/PrivacyContext';
 import { useCart } from '../../context/CartContext';
 import { useNavigate } from 'react-router-dom';

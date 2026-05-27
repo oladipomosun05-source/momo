@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
+import { usePrivacy } from '../../context/PrivacyContext';
 import { API_URL } from '../../config';
 
 const LoginPage = () => {
