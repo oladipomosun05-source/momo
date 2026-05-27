@@ -116,9 +116,7 @@ const userSchema = new mongoose.Schema({
     email: { 
         type: String, 
         required: true, 
-        unique: true,
-        set: encrypt,
-        get: decrypt
+        unique: true 
     },
     password: { type: String, required: true }, // In a real app, hash this!
     role: { type: String, default: 'GUEST' },
