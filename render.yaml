@@ -1,7 +1,7 @@
 services:
   # 1. Backend Web Service
   - type: web
-    name: momobee
+    name: privacyframeworkb
     env: node
     plan: free
     rootDir: server
@@ -16,13 +16,13 @@ services:
         generateValue: true
       - key: CORS_ORIGIN
         fromService:
-          type: static
-          name: my-app-frontend
+          type: staticSite
+          name: privacyframework
           property: host
 
+staticSites:
   # 2. Frontend Static Site
-  - type: static
-    name: momo
+  - name: privacyframework
     rootDir: finalyearprojectlatest
     buildCommand: npm install && npm run build
     publishDir: dist
@@ -30,7 +30,7 @@ services:
       - key: VITE_API_URL
         fromService:
           type: web
-          name: my-app-backend
+          name: privacyframeworkb
           property: host
     routes:
       - type: rewrite
