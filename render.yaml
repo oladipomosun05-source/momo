@@ -1,7 +1,7 @@
 services:
   # 1. Backend Web Service
   - type: web
-    name: my-app-backend
+    name: momobee
     env: node
     plan: free
     rootDir: server
@@ -22,7 +22,7 @@ services:
 
   # 2. Frontend Static Site
   - type: static
-    name: my-app-frontend
+    name: momo
     rootDir: finalyearprojectlatest
     buildCommand: npm install && npm run build
     publishDir: dist
