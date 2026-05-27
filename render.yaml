@@ -6,12 +6,19 @@ services:
     plan: free
     rootDir: server
     buildCommand: npm install
-    startCommand: node server.js
+    startCommand: npm start
     envVars:
       - key: PORT
         value: 10000
       - key: MONGODB_URI
         value: mongodb+srv://oladipomosun05_db_user:lACTcaY0b0ExLl10@cluster0.aulccqs.mongodb.net/privacy_framework?retryWrites=true&w=majority
+      - key: JWT_SECRET
+        generateValue: true
+      - key: CORS_ORIGIN
+        fromService:
+          type: web
+          name: my-app-frontend
+          property: host
 
   # 2. Frontend Static Site
   - type: web
@@ -21,6 +28,12 @@ services:
     rootDir: finalyearprojectlatest
     buildCommand: npm install && npm run build
     publishDir: dist
+    envVars:
+      - key: VITE_API_URL
+        fromService:
+          type: web
+          name: my-app-backend
+          property: host
     routes:
       - type: rewrite
         source: /*

@@ -51,14 +51,18 @@ function decrypt(text) {
 
 const app = express();
 const httpServer = createServer(app);
+
+// Use CORS_ORIGIN env var in production (set by render.yaml), fallback to localhost for dev
+const CORS_ORIGIN = process.env.CORS_ORIGIN || 'http://localhost:5173';
+
 const io = new Server(httpServer, {
     cors: {
-        origin: "http://localhost:5173",
+        origin: CORS_ORIGIN,
         methods: ["GET", "POST"]
     }
 });
 
-app.use(cors());
+app.use(cors({ origin: CORS_ORIGIN, credentials: true }));
 app.use(express.json());
 app.use(morgan('dev'));
 
