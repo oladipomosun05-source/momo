@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { API_BASE_URL } from './config';
+import { API_BASE_URL } from '../config';
 
 // Create an axios instance with the base URL of the Render service
 const api = axios.create({
